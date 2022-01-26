@@ -1,0 +1,9 @@
+String recordId = '0064x00000CRfBH';
+ProcessInstanceWorkitem[] Pval = [SELECT Id FROM ProcessInstanceWorkItem WHERE ProcessInstance.TargetObjectId = :recordId AND ProcessInstance.Status = 'Pending']; 
+if(Pval.size() > 0){
+     
+    Approval.ProcessWorkItemRequest Preq= new Approval.ProcessWorkItemRequest();
+    Preq.setAction('Removed');
+    Preq.setWorkItemId(Pval[0].Id);
+    Approval.ProcessResult result = Approval.process(Preq);
+}
